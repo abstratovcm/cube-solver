@@ -1,0 +1,20 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "parcel index.html --host 0.0.0.0 --port 3000",
+    "build": "parcel build index.html --host 0.0.0.0 --port 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "parcel": "^2.10.3"
+  }
+}
