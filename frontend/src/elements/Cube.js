@@ -36,7 +36,7 @@ class Cube {
           face.mesh.position.x = -size / 2;
           break;
       }
-      
+      face.mesh.userData.cube = this;
       this.group.add(face.mesh);
     }
   }
