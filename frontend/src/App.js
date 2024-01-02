@@ -23,7 +23,7 @@ class App {
 
   initRubiksCube() {
     this.rubiksCube = createRubiksCube();
-    this.scene.add(this.rubiksCube.mesh);
+    this.scene.add(this.rubiksCube.group);
   }
 
   startAnimationLoop = () => {

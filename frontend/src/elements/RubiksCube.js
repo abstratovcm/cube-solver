@@ -3,7 +3,7 @@ import Cube from './Cube';
 
 class RubiksCube {
     constructor() {
-        this.mesh = new Group();
+        this.group = new Group();
 
         const cubeSize = 0.5;
         const spacing = 0.1;
@@ -17,15 +17,16 @@ class RubiksCube {
                         (cubeSize + spacing) * (y - 1),
                         (cubeSize + spacing) * (z - 1)
                     );
-                    this.mesh.add(cube.group);
+                    cube.group.userData.rubiksCube = this;
+                    this.group.add(cube.group);
                 }
             }
         }
     }
 
     update() {
-        this.mesh.rotation.x += 0.01;
-        this.mesh.rotation.y += 0.01;
+        this.group.rotation.x += 0.01;
+        this.group.rotation.y += 0.01;
     }
 }
 

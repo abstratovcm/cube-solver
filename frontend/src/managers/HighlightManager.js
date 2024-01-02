@@ -2,36 +2,54 @@ import { MeshBasicMaterial, BackSide } from 'three';
 
 class HighlightManager {
   constructor() {
-    this.selectedObject = null;
-    this.originalMaterial = null;
+    this.selectedCubes = [];
     this.highlightMaterial = new MeshBasicMaterial({ color: 0xffffff, side: BackSide });
   }
 
-  setHighlight(object) {
-    if (this.selectedObject) {
-      this.removeHighlight();
-    }
+  setPlaneHighlight(face) {
+    this.removeHighlights();
 
-    if (object && object.userData && object.userData.cube) {
-      this.selectedObject = object.userData.cube.group;
-      this.originalMaterial = [];
-      this.selectedObject.children.forEach(child => {
-        this.originalMaterial.push(child.material);
-        child.material = this.highlightMaterial;
+    if (face && face.userData && face.userData.cube) {
+      const selectedCube = face.userData.cube.group;
+      const selectedCubePosition = selectedCube.position;
+      const rubiksCube = selectedCube.userData.rubiksCube.group;
+      rubiksCube.children.forEach(cube => {
+        const cubePosition = cube.position;
+        if (cubePosition.x === selectedCubePosition.x) {
+          cube.children.forEach(face => {
+            face.userData.originalMaterial = face.material;
+            face.material = this.highlightMaterial;
+          });
+          this.selectedCubes.push(cube);
+        }
       });
     }
   }
-  
-  removeHighlight() {
-    if (this.selectedObject && this.originalMaterial) {
-      this.selectedObject.children.forEach((child, idx) => {
-        child.material = this.originalMaterial[idx];
+
+  setHighlight(face) {
+    this.removeHighlights();
+
+    if (face && face.userData && face.userData.cube) {
+      const selectedCube = face.userData.cube.group;
+      selectedCube.children.forEach(face => {
+        face.userData.originalMaterial = face.material;
+        face.material = this.highlightMaterial;
       });
-      this.selectedObject = null;
-      this.originalMaterial = null;
+      this.selectedCubes.push(selectedCube);
     }
   }
-  
+
+  removeHighlights() {
+    this.selectedCubes.forEach(cube => {
+      cube.children.forEach(face => {
+        if (face.userData.originalMaterial) {
+          face.material = face.userData.originalMaterial;
+          delete face.userData.originalMaterial;
+        }
+      });
+    });
+    this.selectedCubes = [];
+  }
 }
 
 export default HighlightManager;

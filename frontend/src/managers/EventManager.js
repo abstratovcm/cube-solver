@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { onDocumentMouseClick, onWindowResize } from '../handlers/EventHandlers';
+import EventHandler from '../handlers/EventHandler';
 
 class EventManager {
     constructor(camera, renderer, raycaster, scene, highlightManager) {
@@ -14,11 +14,13 @@ class EventManager {
     }
 
     addEventListeners() {
-        document.addEventListener('click', (e) => onDocumentMouseClick(
+        document.addEventListener('mouseup', (e) => EventHandler.onMouseUp(
             e, this.mouse, this.raycaster,
             this.camera, this.scene, this.highlightManager
         ), false);
-        window.addEventListener('resize', () => onWindowResize(this.camera, this.renderer), false);
+        document.addEventListener('mousedown', EventHandler.onMouseDown, false);
+        document.addEventListener('mousemove', EventHandler.onMouseMove, false);
+        window.addEventListener('resize', () => EventHandler.onWindowResize(this.camera, this.renderer), false);
     }
 }
 
