@@ -23,11 +23,6 @@ class RubiksCube {
             }
         }
     }
-
-    update() {
-        this.group.rotation.x += 0.01;
-        this.group.rotation.y += 0.01;
-    }
 }
 
 export default RubiksCube;

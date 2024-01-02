@@ -1,12 +1,12 @@
 import { MeshBasicMaterial, DoubleSide } from 'three';
 
-class HighlightManager {
+class RubiksCubeHighlighter {
   constructor() {
     this.selectedCubes = [];
     this.highlightMaterial = new MeshBasicMaterial({ color: 0xffffff, side: DoubleSide });
   }
 
-  setPlaneHighlight(face) {
+  setLayerHighlight(face) {
     this.removeHighlights();
 
     if (face && face.userData && face.userData.cube) {
@@ -26,7 +26,7 @@ class HighlightManager {
     }
   }
 
-  setHighlight(face) {
+  setCubeHighlight(face) {
     this.removeHighlights();
 
     if (face && face.userData && face.userData.cube) {
@@ -52,4 +52,4 @@ class HighlightManager {
   }
 }
 
-export default HighlightManager;
+export default RubiksCubeHighlighter;
