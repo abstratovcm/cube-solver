@@ -1,9 +1,9 @@
-import { MeshBasicMaterial, BackSide } from 'three';
+import { MeshBasicMaterial, DoubleSide } from 'three';
 
 class HighlightManager {
   constructor() {
     this.selectedCubes = [];
-    this.highlightMaterial = new MeshBasicMaterial({ color: 0xffffff, side: BackSide });
+    this.highlightMaterial = new MeshBasicMaterial({ color: 0xffffff, side: DoubleSide });
   }
 
   setPlaneHighlight(face) {

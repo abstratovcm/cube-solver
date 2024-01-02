@@ -18,8 +18,13 @@ class EventManager {
             e, this.mouse, this.raycaster,
             this.camera, this.scene, this.highlightManager
         ), false);
-        document.addEventListener('mousedown', EventHandler.onMouseDown, false);
-        document.addEventListener('mousemove', EventHandler.onMouseMove, false);
+        document.addEventListener('mousedown', (e) => EventHandler.onMouseDown(
+            e, this.mouse, this.raycaster,
+            this.camera, this.scene, this.highlightManager
+        ), false);
+        document.addEventListener('mousemove', (e) => EventHandler.onMouseMove(
+            e, this.highlightManager
+        ), false);
         window.addEventListener('resize', () => EventHandler.onWindowResize(this.camera, this.renderer), false);
     }
 }
