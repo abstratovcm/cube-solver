@@ -13,7 +13,6 @@ class RubiksCubeEventManager extends BaseEventManager {
         document.addEventListener('mouseup', this.mouseHandler.onMouseUp);
         document.addEventListener('mousedown', this.mouseHandler.onMouseDown);
         document.addEventListener('mousemove', this.mouseHandler.onMouseMove);
-        window.addEventListener('resize', this.onWindowResize);
     }
 
     removeEventListeners() {
@@ -21,7 +20,6 @@ class RubiksCubeEventManager extends BaseEventManager {
         document.removeEventListener('mouseup', this.mouseHandler.onMouseUp);
         document.removeEventListener('mousedown', this.mouseHandler.onMouseDown);
         document.removeEventListener('mousemove', this.mouseHandler.onMouseMove);
-        window.removeEventListener('resize', this.onWindowResize);
     }
 }
 

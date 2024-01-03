@@ -7,6 +7,11 @@ class RubiksCubeHighlighter {
   }
 
   setLayerHighlight(face) {
+    if (this.isFaceHighlighted(face)) {
+      this.removeHighlights();
+      return;
+    }
+
     this.removeHighlights();
 
     if (face && face.userData && face.userData.cube) {
@@ -27,6 +32,11 @@ class RubiksCubeHighlighter {
   }
 
   setCubeHighlight(face) {
+    if (this.isFaceHighlighted(face)) {
+      this.removeHighlights();
+      return;
+    }
+
     this.removeHighlights();
 
     if (face && face.userData && face.userData.cube) {
@@ -37,6 +47,10 @@ class RubiksCubeHighlighter {
       });
       this.selectedCubes.push(selectedCube);
     }
+  }
+
+  isFaceHighlighted(face) {
+    return face.material === this.highlightMaterial;
   }
 
   removeHighlights() {

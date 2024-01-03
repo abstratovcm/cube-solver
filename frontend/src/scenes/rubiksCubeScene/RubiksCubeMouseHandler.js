@@ -10,6 +10,7 @@ class RubiksCubeMouseHandler {
         this.centerOfRotation = new THREE.Vector3();
         this.rotationAxis = new THREE.Vector3(1, 0, 0); // Default axis, can be changed
         this.totalRotation = 0;
+        this.detectedObject = null;
 
         this.onMouseDown = this.onMouseDown.bind(this);
         this.onMouseUp = this.onMouseUp.bind(this);
@@ -27,15 +28,15 @@ class RubiksCubeMouseHandler {
         const intersects = this.scene.raycaster.intersectObjects(this.scene.children, true);
 
         if (intersects.length > 0) {
-            this.scene.highlightManager.setLayerHighlight(intersects[0].object);
+            this.detectedObject = intersects[0].object;
         }
     }
 
-    onMouseUp(event) {
+    onMouseUp() {
         this.isMouseDown = false;
         const duration = Date.now() - this.mouseDownTime;
         if (duration < 200) {
-            this.onClick(event);
+            this.onClick();
         } else {
             this.onRelease();
         }
@@ -50,21 +51,19 @@ class RubiksCubeMouseHandler {
         }
     }
 
-    onClick(event) {
-        event.preventDefault();
-
-        this.scene.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        this.scene.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-
-        this.scene.raycaster.setFromCamera(this.scene.mouse, this.scene.camera);
-        const intersects = this.scene.raycaster.intersectObjects(this.scene.children, true);
-
-        if (intersects.length > 0) {
-            this.scene.highlightManager.setCubeHighlight(intersects[0].object);
+    onClick() {
+        if (this.detectedObject) {
+            this.scene.highlightManager.setCubeHighlight(this.detectedObject);
+            this.detectedObject = null;
         }
     }
 
     onHold(event) {
+        if (this.detectedObject) {
+            this.scene.highlightManager.setLayerHighlight(this.detectedObject);
+            this.detectedObject = null;
+        }
+
         this.currentPosition = { x: event.clientX, y: event.clientY };
 
         const dx = this.currentPosition.x - this.startPosition.x;
